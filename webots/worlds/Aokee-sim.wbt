@@ -4,9 +4,10 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/CircleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/animals/protos/Cat.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/BakelitePlastic.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/BlanketFabric.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/CorrugatedMetal.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/CementTiles.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/BlanketFabric.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/BakelitePlastic.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/DryMud.proto"
 
 WorldInfo {
@@ -19,8 +20,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.10106551482806386 -0.34434384641083127 0.933387956399445 5.4969069239094
-  position -1.115529731469439 0.7927260456698884 0.4548409534536561
+  orientation -0.06866701706660494 0.7843806690485616 0.6164671984705312 0.6105601684197922
+  position -2.1335381316087845 -0.8289133488952177 1.0038719093217154
 }
 TexturedBackground {
 }
@@ -30,286 +31,287 @@ CircleArena {
   radius 2
 }
 Cat {
-  translation 0.52 0 0
+  translation -0.581056 0.58956 0
   rotation 0 0 1 -2.3561953071795863
 }
 Robot {
-  translation 0.43225 -0.608517 -0.00127574
-  rotation -0.000507784830175423 0.7071083946091892 0.70710498543553 -3.137854802809544
+  translation -0.5 0 0
   children [
-    Shape {
-      appearance CementTiles {
-      }
-      geometry DEF base_link Mesh {
-        url [
-          "../meshes/base_link.STL"
-        ]
-      }
-    }
-    HingeJoint {
-      jointParameters HingeJointParameters {
-        anchor 0.01 0.06 0.09
-        maxStop 1
-      }
-      device [
-        PositionSensor {
-        }
-        RotationalMotor {
-          name "joint_motor_1"
+    Solid {
+      translation 0 0 0.25
+      children [
+        Shape {
+          appearance CorrugatedMetal {
+          }
+          geometry Box {
+            size 0.1 0.1 0.5
+          }
         }
       ]
-      endPoint Solid {
-        translation 0.010000151023347522 0.05999999134965936 0.08999999490233877
-        rotation -0.9999999999983995 -3.981446772799335e-07 -1.7442564819952296e-06 1.047200000004521
+    }
+    SliderJoint {
+      jointParameters JointParameters {
+        position 0.25
+      }
+      endPoint Robot {
+        translation -0.0703483 0.159786 0.249683
+        rotation 0.0018689201222956268 -0.7071040462704272 0.7071070462706236 -3.1405753071795863
         children [
           Shape {
-            appearance BlanketFabric {
+            appearance CementTiles {
             }
-            geometry DEF leg_up_1 Mesh {
+            geometry DEF base_link Mesh {
               url [
-                "../meshes/leg_up_1.STL"
+                "../meshes/base_link.STL"
               ]
             }
           }
           HingeJoint {
             jointParameters HingeJointParameters {
-              axis 1 7e-06 0
-              anchor 0.03 0.14489 -0.038823
+              anchor 0.01 0.06 0.09
+              maxStop 1
             }
+            device [
+              PositionSensor {
+              }
+              RotationalMotor {
+                name "joint_motor_1"
+              }
+            ]
             endPoint Solid {
-              translation 0.03 0.14489 -0.038823
-              rotation 3.999998617514851e-06 -0.9659266661753196 0.25881591055310504 3.141595
+              translation 0.010000151023347522 0.05999999134965936 0.08999999490233877
+              rotation -0.9999999999983995 -3.981446772799335e-07 -1.7442564819952296e-06 1.047200000004521
               children [
                 Shape {
                   appearance BlanketFabric {
                   }
-                  geometry DEF leg_low_1 Mesh {
+                  geometry DEF leg_up_1 Mesh {
                     url [
-                      "../meshes/leg_low_1.STL"
+                      "../meshes/leg_up_1.STL"
                     ]
                   }
                 }
                 HingeJoint {
                   jointParameters HingeJointParameters {
-                    anchor 0 -0.204889 -0.080128
+                    axis 1 7e-06 0
+                    anchor 0.03 0.14489 -0.038823
                   }
                   endPoint Solid {
-                    translation 6.938893903907214e-17 -0.20488900000000007 -0.08012799999999996
-                    rotation -1 -2.1381748714032848e-16 -1.4889465637453606e-16 1.7401299999999982
+                    translation 0.03 0.14489 -0.038823
+                    rotation 3.999998617514854e-06 -0.9659266661753196 0.2588159105531049 3.141595
                     children [
                       Shape {
-                        appearance DryMud {
+                        appearance BlanketFabric {
                         }
-                        geometry DEF wheel1 Mesh {
+                        geometry DEF leg_low_1 Mesh {
                           url [
-                            "../meshes/wheel1.STL"
+                            "../meshes/leg_low_1.STL"
                           ]
                         }
                       }
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          anchor 0 -0.204889 -0.080128
+                        }
+                        endPoint Solid {
+                          translation 6.938893903907214e-17 -0.20488900000000007 -0.08012799999999996
+                          rotation -1 -2.1381748714032848e-16 -1.4889465637453606e-16 1.7401299999999982
+                          children [
+                            Shape {
+                              appearance DryMud {
+                              }
+                              geometry DEF wheel1 Mesh {
+                                url [
+                                  "../meshes/wheel1.STL"
+                                ]
+                              }
+                            }
+                          ]
+                          name "wheel"
+                          boundingObject Pose {
+                            translation 0.0075 0 0
+                            rotation 0 1 0 -1.5707953071795862
+                            children [
+                              Cylinder {
+                                height 0.015
+                                radius 0.05
+                              }
+                            ]
+                          }
+                          physics Physics {
+                            density -1
+                            mass 0.115159
+                            centerOfMass [
+                              0.0075 0 0
+                            ]
+                            inertiaMatrix [
+                              0.0001471876 7.575303e-05 7.575303e-05
+                              -1.328422e-20 8.1067e-22 -1.694066e-21
+                            ]
+                          }
+                        }
+                      }
                     ]
-                    name "wheel"
-                    boundingObject Pose {
-                      translation 0.0075 0 0
-                      rotation 0 1 0 -1.5707953071795862
+                    name "leg_low_1"
+                    boundingObject DEF bobj_led_low Pose {
+                      translation -0.005 -0.101627 -0.0420949
+                      rotation 1 0 0 0.38
                       children [
-                        Cylinder {
-                          height 0.015
-                          radius 0.05
+                        Box {
+                          size 0.01 0.2 0.025
                         }
                       ]
                     }
                     physics Physics {
                       density -1
-                      mass 0.115159
+                      mass 0.056374
                       centerOfMass [
-                        0.0075 0 0
+                        -0.005 -0.102444 -0.040064
                       ]
                       inertiaMatrix [
-                        0.0001471876 7.575303e-05 7.575303e-05
-                        -1.328422e-20 8.1067e-22 -1.694066e-21
+                        0.000247342 3.549011e-05 0.0002127914
+                        3.648e-20 1.465408e-20 -8.185932e-05
                       ]
                     }
                   }
                 }
               ]
-              name "leg_low_1"
-              boundingObject DEF bobj_led_low Pose {
-                translation -0.005 -0.101627 -0.0420949
-                rotation 1 0 0 0.38
+              name "leg_up_1"
+              boundingObject DEF bobj_leg_up Pose {
+                translation 0.0225 0.0772743 -0.0207054
+                rotation 1 0 0 -0.261795307179586
                 children [
                   Box {
-                    size 0.01 0.2 0.025
+                    size 0.015 0.165 0.03
                   }
                 ]
               }
               physics Physics {
                 density -1
-                mass 0.056374
+                mass 0.069394
                 centerOfMass [
-                  -0.005 -0.102444 -0.040064
+                  0.021227 0.064601 -0.01731
                 ]
                 inertiaMatrix [
-                  0.000247342 3.549011e-05 0.0002127914
-                  3.648e-20 1.465408e-20 -8.185932e-05
+                  0.0001671581 1.778075e-05 0.0001544053
+                  -5.707936e-06 1.529437e-06 3.944011e-05
                 ]
               }
             }
           }
-        ]
-        name "leg_up_1"
-        boundingObject DEF bobj_leg_up Pose {
-          translation 0.0225 0.0772743 -0.0207054
-          rotation 1 0 0 -0.261795307179586
-          children [
-            Box {
-              size 0.015 0.165 0.03
-            }
-          ]
-        }
-        physics Physics {
-          density -1
-          mass 0.069394
-          centerOfMass [
-            0.021227 0.064601 -0.01731
-          ]
-          inertiaMatrix [
-            0.0001671581 1.778075e-05 0.0001544053
-            -5.707936e-06 1.529437e-06 3.944011e-05
-          ]
-        }
-      }
-    }
-    HingeJoint {
-      jointParameters HingeJointParameters {
-        anchor 0.01 0.06 0.21
-        minStop -1
-      }
-      device [
-        RotationalMotor {
-          name "joint_motor_2"
-        }
-      ]
-      endPoint Solid {
-        translation 0.009999739596426777 0.06000000152967373 0.21000000344303107
-        rotation 0.9999999999991807 3.329531917258024e-07 1.236167525391014e-06 1.5708000000028186
-        children [
-          Shape {
-            appearance BakelitePlastic {
-            }
-            geometry DEF leg_up_2 Mesh {
-              url [
-                "../meshes/leg_up_2.STL"
-              ]
-            }
-          }
           HingeJoint {
             jointParameters HingeJointParameters {
-              axis 1 -7e-06 0
-              anchor 0.005 0.14489 -0.038823
+              anchor 0.01 0.06 0.21
+              minStop -1
             }
+            device [
+              RotationalMotor {
+                name "joint_motor_2"
+              }
+            ]
             endPoint Solid {
-              translation 0.005 0.14489 -0.038823
-              rotation 9.999999437450826e-07 0.364219979536301 -0.9313129476741836 3.141599
+              translation 0.009999739596426777 0.06000000152967373 0.21000000344303107
+              rotation 0.9999999999991807 3.329531917258024e-07 1.236167525391014e-06 1.5708000000028186
               children [
                 Shape {
                   appearance BakelitePlastic {
                   }
-                  geometry DEF leg_low_2 Mesh {
+                  geometry DEF leg_up_2 Mesh {
                     url [
-                      "../meshes/leg_low_2.STL"
+                      "../meshes/leg_up_2.STL"
                     ]
                   }
                 }
                 HingeJoint {
                   jointParameters HingeJointParameters {
-                    position 0.33329446402391827
-                    anchor -0.01 0.20489 0.080128
+                    axis 1 -7e-06 0
+                    anchor 0.005 0.14489 -0.038823
                   }
-                  endPoint SolidReference {
-                    solidName "wheel"
+                  endPoint Solid {
+                    translation 0.005 0.14489 -0.038823
+                    rotation 9.999999437450826e-07 0.364219979536301 -0.9313129476741836 3.141599
+                    children [
+                      Shape {
+                        appearance BakelitePlastic {
+                        }
+                        geometry DEF leg_low_2 Mesh {
+                          url [
+                            "../meshes/leg_low_2.STL"
+                          ]
+                        }
+                      }
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          position 0.33329446402391827
+                          anchor -0.01 0.20489 0.080128
+                        }
+                        endPoint SolidReference {
+                          solidName "wheel"
+                        }
+                      }
+                    ]
+                    name "leg_low_2"
+                    boundingObject Pose {
+                      translation -0.005 0.102 0.0421
+                      rotation 1 0 0 0.38
+                      children [
+                        Box {
+                          size 0.01 0.2 0.025
+                        }
+                      ]
+                    }
+                    physics Physics {
+                      density -1
+                      mass 0.056374
+                      centerOfMass [
+                        -0.005 0.102444 0.040064
+                      ]
+                      inertiaMatrix [
+                        0.000247342 3.549011e-05 0.0002127914
+                        -4.539411e-20 -1.720612e-20 -8.185932e-05
+                      ]
+                    }
                   }
                 }
               ]
-              name "leg_low_2"
-              boundingObject Pose {
-                translation -0.005 0.102 0.0421
-                rotation 1 0 0 0.38
-                children [
-                  Box {
-                    size 0.01 0.2 0.025
-                  }
-                ]
-              }
+              name "leg_up_2"
+              boundingObject USE bobj_leg_up
               physics Physics {
                 density -1
-                mass 0.056374
+                mass 0.069394
                 centerOfMass [
-                  -0.005 0.102444 0.040064
+                  0.021227 0.064601 -0.01731
                 ]
                 inertiaMatrix [
-                  0.000247342 3.549011e-05 0.0002127914
-                  -4.539411e-20 -1.720612e-20 -8.185932e-05
+                  0.0001671581 1.778075e-05 0.0001544053
+                  -5.707936e-06 1.529437e-06 3.944011e-05
                 ]
               }
             }
           }
         ]
-        name "leg_up_2"
-        boundingObject USE bobj_leg_up
-        physics Physics {
-          density -1
-          mass 0.069394
-          centerOfMass [
-            0.021227 0.064601 -0.01731
-          ]
-          inertiaMatrix [
-            0.0001671581 1.778075e-05 0.0001544053
-            -5.707936e-06 1.529437e-06 3.944011e-05
+        name "balance"
+        boundingObject Pose {
+          translation 0.02 0.06 0.15
+          children [
+            Box {
+              size 0.04 0.12 0.3
+            }
           ]
         }
+        physics Physics {
+          density -1
+          mass 20
+          centerOfMass [
+            0.01817 0.050196 0.15
+          ]
+          inertiaMatrix [
+            0.007974762 0.006909084 0.001360224
+            6.935368e-05 3.557001e-20 5.008754e-20
+          ]
+        }
+        controller "<none>"
       }
     }
   ]
-  name "balance"
-  boundingObject Pose {
-    translation 0.02 0.06 0.15
-    children [
-      Box {
-        size 0.04 0.12 0.3
-      }
-    ]
-  }
-  physics Physics {
-    density -1
-    mass 20
-    centerOfMass [
-      0.01817 0.050196 0.15
-    ]
-    inertiaMatrix [
-      0.007974762 0.006909084 0.001360224
-      6.935368e-05 3.557001e-20 5.008754e-20
-    ]
-  }
-  controller "<none>"
-}
-Robot {
-  children [
-    HingeJoint {
-      jointParameters HingeJointParameters {
-      }
-      endPoint Solid {
-        translation 0 0 0.01
-        rotation 1 0 0 1.5707996938995747
-        children [
-          Shape {
-            geometry Capsule {
-              height 0.15
-              radius 0.01
-            }
-          }
-        ]
-      }
-    }
-  ]
-  name "five_links"
 }
