@@ -1,21 +1,5 @@
 [
  {
-  "directory": "/home/dokee/Documents/robomaster/projects/balance_infantry_test/controllers/balance_test",
-  "arguments": [
-   "g++",
-   "-c",
-   "-Wall",
-   "-O3",
-   "-DNDEBUG",
-   "-I.",
-   "-I/usr/local/webots/include/controller/cpp",
-   "balance_test.cpp",
-   "-o",
-   "build/release/balance_test.o"
-  ],
-  "file": "balance_test.cpp"
- },
- {
   "directory": "/home/dokee/Documents/robomaster/projects/Aokee-sim/webots/controllers/Aokee-controller",
   "arguments": [
    "g++",
@@ -23,6 +7,7 @@
    "-Wall",
    "-O3",
    "-DNDEBUG",
+   "-I/usr/include/eigen3/Eigen",
    "-I.",
    "-I/usr/local/webots/include/controller/cpp",
    "Aokee-controller.cpp",

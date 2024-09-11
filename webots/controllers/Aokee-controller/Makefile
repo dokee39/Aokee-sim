@@ -48,6 +48,7 @@
 ### ---- Linked libraries ----
 ### if your program needs additional libraries:
 ### INCLUDE = -I"/my_library_path/include"
+INCLUDE = -I"/usr/include/eigen3/Eigen"
 ### LIBRARIES = -L"/path/to/my/library" -lmy_library -lmy_other_library
 ###
 ### ---- Linking options ----
