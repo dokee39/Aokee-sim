@@ -20,8 +20,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.14594124460023591 0.6681391717297535 0.7295828947589252 0.595829816304257
-  position -2.3896379937114456 -1.0399215026518238 1.061754678392734
+  orientation -0.050812573235241715 0.3944503605315239 0.9175113053678217 0.783622115301213
+  position -1.6334758476573479 -0.858458671518961 0.6520856287806176
 }
 TexturedBackground {
 }
@@ -99,7 +99,7 @@ Robot {
                   }
                   endPoint Solid {
                     translation 0.03 0.14489 -0.038823
-                    rotation 3.999998617518559e-06 -0.9659266661753195 0.25881591055310527 3.141595
+                    rotation 3.999998617518562e-06 -0.9659266661753196 0.2588159105531051 3.141595
                     children [
                       Shape {
                         appearance BlanketFabric {
@@ -114,6 +114,10 @@ Robot {
                         jointParameters HingeJointParameters {
                           anchor 0 -0.204889 -0.080128
                         }
+                        device [
+                          RotationalMotor {
+                          }
+                        ]
                         endPoint Solid {
                           translation 6.938893903907209e-17 -0.20488900000000007 -0.08012799999999996
                           rotation -1 -2.1381748714032856e-16 -1.4889465637453615e-16 1.7401299999999975
@@ -139,9 +143,9 @@ Robot {
                               }
                             ]
                           }
-                          physics Physics {
+                          physics DEF PHYSICS_LEG Physics {
                             density -1
-                            mass 0.115159
+                            mass 1e-07
                             centerOfMass [
                               0.0075 0 0
                             ]
@@ -163,17 +167,7 @@ Robot {
                         }
                       ]
                     }
-                    physics Physics {
-                      density -1
-                      mass 0.056374
-                      centerOfMass [
-                        -0.005 -0.102444 -0.040064
-                      ]
-                      inertiaMatrix [
-                        0.000247342 3.549011e-05 0.0002127914
-                        3.648e-20 1.465408e-20 -8.185932e-05
-                      ]
-                    }
+                    physics USE PHYSICS_LEG
                   }
                 }
               ]
@@ -187,17 +181,7 @@ Robot {
                   }
                 ]
               }
-              physics Physics {
-                density -1
-                mass 0.069394
-                centerOfMass [
-                  0.021227 0.064601 -0.01731
-                ]
-                inertiaMatrix [
-                  0.0001671581 1.778075e-05 0.0001544053
-                  -5.707936e-06 1.529437e-06 3.944011e-05
-                ]
-              }
+              physics USE PHYSICS_LEG
             }
           }
           HingeJoint {
@@ -264,33 +248,13 @@ Robot {
                         }
                       ]
                     }
-                    physics Physics {
-                      density -1
-                      mass 0.056374
-                      centerOfMass [
-                        -0.005 0.102444 0.040064
-                      ]
-                      inertiaMatrix [
-                        0.000247342 3.549011e-05 0.0002127914
-                        -4.539411e-20 -1.720612e-20 -8.185932e-05
-                      ]
-                    }
+                    physics USE PHYSICS_LEG
                   }
                 }
               ]
               name "leg_up_2"
               boundingObject USE bobj_leg_up
-              physics Physics {
-                density -1
-                mass 0.069394
-                centerOfMass [
-                  0.021227 0.064601 -0.01731
-                ]
-                inertiaMatrix [
-                  0.0001671581 1.778075e-05 0.0001544053
-                  -5.707936e-06 1.529437e-06 3.944011e-05
-                ]
-              }
+              physics USE PHYSICS_LEG
             }
           }
         ]

@@ -39,7 +39,7 @@
 ###
 ### ---- C++ Sources ----
 ### if your program uses several C++ source files:
-CXX_SOURCES = Aokee-controller.cc leg.cc
+CXX_SOURCES = Aokee-controller.cc leg.cc pid_controller.cc user_lib_cpp.cc
 ###
 ### ---- Compilation options ----
 ### if special compilation flags are necessary:
@@ -48,7 +48,9 @@ CXX_SOURCES = Aokee-controller.cc leg.cc
 ### ---- Linked libraries ----
 ### if your program needs additional libraries:
 ### INCLUDE = -I"/my_library_path/include"
-INCLUDE = -I"/usr/include/eigen3/Eigen"
+INCLUDE = \
+-I"/usr/include/eigen3/Eigen" \
+-I"./inc"
 ### LIBRARIES = -L"/path/to/my/library" -lmy_library -lmy_other_library
 ###
 ### ---- Linking options ----

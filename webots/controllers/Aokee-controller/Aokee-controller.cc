@@ -8,6 +8,20 @@
 
 #include "leg.hpp"
 
+const robot::FiveLinkParam five_link_param = {
+    .l_a = 0.060,
+    .l_b = 0.150,
+    .l_c = 0.220,
+};
+
+const pid::PidConfig pid_leg_length_config = {
+    .kp = 2000,
+    .ki = 2,
+    .kd = 1000000,
+    .max_iout = 10,
+    .max_out = 100,
+};
+
 std::atomic<bool> keep_running(true);
 std::atomic<float> l;
 std::atomic<float> theta_l;
@@ -50,35 +64,31 @@ int main(int argc, char **argv) {
     }
     robot->step(timeStep);
     
-    const robot::FiveLinkParam five_link_param = {
-        .l_a = 60,
-        .l_b = 150,
-        .l_c = 220,
-    };
-    auto *five_link = new robot::FiveLink(five_link_param, 2.8798f - encoder[0]->getValue(), 2.8798f - encoder[1]->getValue());
-    l = five_link->l;
-    theta_l = five_link->theta_l;
+    auto *leg = new robot::Leg(five_link_param, 
+                               2.8798f - encoder[0]->getValue(),
+                               2.8798f - encoder[1]->getValue(),
+                               2.8798f - encoder[0]->getValue(),
+                               2.8798f - encoder[1]->getValue(),
+                               pid_leg_length_config);
 
-    std::thread inputThread(read_from_terminal);
+    /*std::thread inputThread(read_from_terminal);*/
 
     while (robot->step(timeStep) != -1 && keep_running) {
-        /*std::cout << five_link->l << ", " << five_link->theta_l << std::endl;*/
-        five_link->l = l;
-        five_link->theta_l = theta_l;
-        five_link->inverse_solve();
-
-        motor[0]->setPosition(2.8798f - five_link->varphi_1);
-        motor[1]->setPosition(five_link->varphi_2 - 2.8798f);
-
-        for (int i = 0; i < 200 / timeStep; i++) {
-            robot->step(timeStep);
-        }
+        leg->update(2.8798f - encoder[0]->getValue(),
+                    2.8798f - encoder[0]->getValue(),
+                    0.0f,
+                    0.0f);
+        leg->ctrl(0.0f, 0.0f, 0.2f);
+        motor[0]->setTorque(-leg->left.tau_1);
+        motor[1]->setTorque(leg->left.tau_2);
+        /*std::cout << "tau_1: " << leg->left.tau_1 << ", tau_2: " << leg->left.tau_2 << ", F_n: " << leg->left.F_n << ", F_l: " << leg->F_ctrl(1) << std::endl;*/
+        /*std::cout << "l: " << leg->left.l << std::endl;*/
     };
 
     keep_running = false;
-    inputThread.join();
+    /*inputThread.join();*/
 
-    delete five_link;
+    delete leg;
     delete robot;
     return 0;
 }

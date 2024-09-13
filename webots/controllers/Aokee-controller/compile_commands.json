@@ -8,6 +8,7 @@
    "-O3",
    "-DNDEBUG",
    "-I/usr/include/eigen3/Eigen",
+   "-I./inc",
    "-I.",
    "-I/usr/local/webots/include/controller/cpp",
    "Aokee-controller.cc",
@@ -25,6 +26,7 @@
    "-O3",
    "-DNDEBUG",
    "-I/usr/include/eigen3/Eigen",
+   "-I./inc",
    "-I.",
    "-I/usr/local/webots/include/controller/cpp",
    "leg.cc",
@@ -32,5 +34,41 @@
    "build/release/leg.o"
   ],
   "file": "leg.cc"
+ },
+ {
+  "directory": "/home/dokee/Documents/robomaster/projects/Aokee-sim/webots/controllers/Aokee-controller",
+  "arguments": [
+   "g++",
+   "-c",
+   "-Wall",
+   "-O3",
+   "-DNDEBUG",
+   "-I/usr/include/eigen3/Eigen",
+   "-I./inc",
+   "-I.",
+   "-I/usr/local/webots/include/controller/cpp",
+   "pid_controller.cc",
+   "-o",
+   "build/release/pid_controller.o"
+  ],
+  "file": "pid_controller.cc"
+ },
+ {
+  "directory": "/home/dokee/Documents/robomaster/projects/Aokee-sim/webots/controllers/Aokee-controller",
+  "arguments": [
+   "g++",
+   "-c",
+   "-Wall",
+   "-O3",
+   "-DNDEBUG",
+   "-I/usr/include/eigen3/Eigen",
+   "-I./inc",
+   "-I.",
+   "-I/usr/local/webots/include/controller/cpp",
+   "user_lib_cpp.cc",
+   "-o",
+   "build/release/user_lib_cpp.o"
+  ],
+  "file": "user_lib_cpp.cc"
  }
 ]
