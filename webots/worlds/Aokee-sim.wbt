@@ -76,6 +76,7 @@ Robot {
               }
               RotationalMotor {
                 name "joint_motor_1"
+                maxTorque 50
               }
             ]
             endPoint Solid {
@@ -98,7 +99,7 @@ Robot {
                   }
                   endPoint Solid {
                     translation 0.03 0.14489 -0.038823
-                    rotation 3.999998617518552e-06 -0.9659266661753194 0.25881591055310565 3.141595
+                    rotation 3.999998617518559e-06 -0.9659266661753195 0.25881591055310527 3.141595
                     children [
                       Shape {
                         appearance BlanketFabric {
@@ -209,11 +210,12 @@ Robot {
               }
               RotationalMotor {
                 name "joint_motor_2"
+                maxTorque 50
               }
             ]
             endPoint Solid {
               translation 0.009999739596426777 0.06000000152967373 0.21000000344303107
-              rotation 0.9999999999991807 3.3295319172580226e-07 1.2361675253910128e-06 1.5708000000028193
+              rotation 0.9999999999991807 3.329531917258022e-07 1.2361675253910128e-06 1.5708000000028193
               children [
                 Shape {
                   appearance BakelitePlastic {
@@ -312,7 +314,7 @@ Robot {
             6.935368e-05 3.557001e-20 5.008754e-20
           ]
         }
-        controller "Aokee-controller"
+        controller "<extern>"
       }
     }
   ]

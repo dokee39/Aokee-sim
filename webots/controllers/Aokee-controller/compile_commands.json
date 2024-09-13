@@ -10,10 +10,27 @@
    "-I/usr/include/eigen3/Eigen",
    "-I.",
    "-I/usr/local/webots/include/controller/cpp",
-   "Aokee-controller.cpp",
+   "Aokee-controller.cc",
    "-o",
    "build/release/Aokee-controller.o"
   ],
-  "file": "Aokee-controller.cpp"
+  "file": "Aokee-controller.cc"
+ },
+ {
+  "directory": "/home/dokee/Documents/robomaster/projects/Aokee-sim/webots/controllers/Aokee-controller",
+  "arguments": [
+   "g++",
+   "-c",
+   "-Wall",
+   "-O3",
+   "-DNDEBUG",
+   "-I/usr/include/eigen3/Eigen",
+   "-I.",
+   "-I/usr/local/webots/include/controller/cpp",
+   "leg.cc",
+   "-o",
+   "build/release/leg.o"
+  ],
+  "file": "leg.cc"
  }
 ]
