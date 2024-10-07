@@ -1,0 +1,193 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/CircleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/animals/protos/Cat.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Cardboard.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/RoughPine.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/MarbleTiles.proto"
+
+WorldInfo {
+  basicTimeStep 1
+  FPS 120
+  contactProperties [
+    ContactProperties {
+      maxContactJoints 16
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.18044423989088682 0.369195007234568 -0.9116660150094812 0.9842127892134082
+  position -2.055980661988201 2.315096709204125 1.4623347257939203
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+CircleArena {
+  radius 2
+}
+Cat {
+  translation -0.581056 0.58956 0
+  rotation 0 0 1 -2.3561953071795863
+}
+Robot {
+  translation 0 0 0.4
+  children [
+    Gyro {
+    }
+    InertialUnit {
+      name "inertial"
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor -0.165 0 0
+      }
+      device [
+        PositionSensor {
+          name "ps_j1"
+        }
+        RotationalMotor {
+          name "joint_motor_1"
+          maxVelocity 30
+          minPosition -0.7
+          maxPosition 0.7
+          maxTorque 20
+        }
+      ]
+      endPoint Solid {
+        translation -0.165 0 -0.15
+        rotation 1 0 0 4.6928012867022945e-06
+        children [
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              anchor -0.015 0 -0.15
+            }
+            device [
+              PositionSensor {
+                name "ps_w1"
+              }
+              RotationalMotor {
+                name "wheel_motor_1"
+                maxVelocity 30
+                maxTorque 5
+              }
+            ]
+            endPoint Solid {
+              translation -0.015 0 -0.15
+              rotation 0 1 0 1.5707996938995745
+              children [
+                Shape {
+                  appearance MarbleTiles {
+                  }
+                  geometry DEF WHEEL Cylinder {
+                    height 0.015
+                    radius 0.075
+                  }
+                }
+              ]
+              name "wheel1"
+              boundingObject USE WHEEL
+              physics DEF PH_WHEEL Physics {
+              }
+            }
+          }
+          Shape {
+            appearance RoughPine {
+            }
+            geometry DEF LEG Box {
+              size 0.015 0.015 0.3
+            }
+          }
+        ]
+        name "leg1"
+        boundingObject USE LEG
+        physics DEF PH_LEG Physics {
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor 0.165 0 0
+      }
+      device [
+        RotationalMotor {
+          name "joint_motor_2"
+          maxVelocity 30
+          minPosition -0.7
+          maxPosition 0.7
+          maxTorque 20
+        }
+        PositionSensor {
+          name "ps_j2"
+        }
+      ]
+      endPoint Solid {
+        translation 0.165 0 -0.15
+        rotation 1 0 0 4.6928012867022945e-06
+        children [
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              anchor 0.015 0 -0.15
+            }
+            device [
+              RotationalMotor {
+                name "wheel_motor_2"
+                maxVelocity 30
+                maxTorque 5
+              }
+              PositionSensor {
+                name "ps_w2"
+              }
+            ]
+            endPoint Solid {
+              translation 0.015 0 -0.15
+              rotation 0 1 0 1.5707996938995745
+              children [
+                Shape {
+                  appearance MarbleTiles {
+                  }
+                  geometry USE WHEEL
+                }
+              ]
+              name "wheel2"
+              boundingObject USE WHEEL
+              physics DEF PH_WHEEL Physics {
+              }
+            }
+          }
+          Shape {
+            appearance RoughPine {
+            }
+            geometry USE LEG
+          }
+        ]
+        name "leg2"
+        boundingObject USE LEG
+        physics DEF PH_LEG Physics {
+        }
+      }
+    }
+    Solid {
+      translation 0 0 -0.05
+      children [
+        Shape {
+          appearance Cardboard {
+          }
+          geometry DEF BODY Box {
+            size 0.28 0.38 0.18
+          }
+        }
+      ]
+      name "body"
+      boundingObject USE BODY
+      physics Physics {
+        mass 10
+      }
+    }
+  ]
+  physics DEF PH_BODY Physics {
+  }
+  controller "<extern>"
+}

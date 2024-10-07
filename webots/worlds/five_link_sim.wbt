@@ -1,0 +1,286 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/CircleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/animals/protos/Cat.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/CorrugatedMetal.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/CementTiles.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/BlanketFabric.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/BakelitePlastic.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/DryMud.proto"
+
+WorldInfo {
+  basicTimeStep 1
+  FPS 120
+  contactProperties [
+    ContactProperties {
+      maxContactJoints 16
+    }
+  ]
+}
+Viewpoint {
+  orientation -0.050812573235241715 0.3944503605315239 0.9175113053678217 0.783622115301213
+  position -1.6334758476573479 -0.858458671518961 0.6520856287806176
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+CircleArena {
+  radius 2
+}
+Cat {
+  translation -0.581056 0.58956 0
+  rotation 0 0 1 -2.3561953071795863
+}
+Robot {
+  translation -0.5 0 0
+  children [
+    Solid {
+      translation 0 0 0.25
+      children [
+        Shape {
+          appearance CorrugatedMetal {
+          }
+          geometry Box {
+            size 0.1 0.1 0.5
+          }
+        }
+      ]
+    }
+    SliderJoint {
+      jointParameters JointParameters {
+        position 0.25
+      }
+      endPoint Robot {
+        translation -0.07034712022003742 0.15978600277664506 0.2496829912943715
+        rotation -3.3905013482585576e-09 0.7071072811865696 -0.7071062811861719 3.14159
+        children [
+          Shape {
+            appearance CementTiles {
+            }
+            geometry DEF base_link Mesh {
+              url [
+                "../meshes/base_link.STL"
+              ]
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              anchor 0.01 0.06 0.09
+              maxStop 1
+            }
+            device [
+              PositionSensor {
+              }
+              RotationalMotor {
+                name "joint_motor_1"
+                maxTorque 50
+              }
+            ]
+            endPoint Solid {
+              translation 0.010000151023347522 0.05999999134965936 0.08999999490233877
+              rotation -0.9999999999983995 -3.981446772799335e-07 -1.744256481995231e-06 1.047200000004521
+              children [
+                Shape {
+                  appearance BlanketFabric {
+                  }
+                  geometry DEF leg_up_1 Mesh {
+                    url [
+                      "../meshes/leg_up_1.STL"
+                    ]
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 1 7e-06 0
+                    anchor 0.03 0.14489 -0.038823
+                  }
+                  endPoint Solid {
+                    translation 0.03 0.14489 -0.038823
+                    rotation 3.999998617518562e-06 -0.9659266661753196 0.2588159105531051 3.141595
+                    children [
+                      Shape {
+                        appearance BlanketFabric {
+                        }
+                        geometry DEF leg_low_1 Mesh {
+                          url [
+                            "../meshes/leg_low_1.STL"
+                          ]
+                        }
+                      }
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          anchor 0 -0.204889 -0.080128
+                        }
+                        device [
+                          RotationalMotor {
+                          }
+                        ]
+                        endPoint Solid {
+                          translation 6.938893903907209e-17 -0.20488900000000007 -0.08012799999999996
+                          rotation -1 -2.1381748714032856e-16 -1.4889465637453615e-16 1.7401299999999975
+                          children [
+                            Shape {
+                              appearance DryMud {
+                              }
+                              geometry DEF wheel1 Mesh {
+                                url [
+                                  "../meshes/wheel1.STL"
+                                ]
+                              }
+                            }
+                          ]
+                          name "wheel"
+                          boundingObject Pose {
+                            translation 0.0075 0 0
+                            rotation 0 1 0 -1.5707953071795862
+                            children [
+                              Cylinder {
+                                height 0.015
+                                radius 0.05
+                              }
+                            ]
+                          }
+                          physics DEF PHYSICS_LEG Physics {
+                            density -1
+                            mass 0.01
+                            centerOfMass [
+                              0.0075 0 0
+                            ]
+                            inertiaMatrix [
+                              0.0001471876 7.575303e-05 7.575303e-05
+                              -1.328422e-20 8.1067e-22 -1.694066e-21
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                    name "leg_low_1"
+                    boundingObject DEF bobj_led_low Pose {
+                      translation -0.005 -0.101627 -0.0420949
+                      rotation 1 0 0 0.38
+                      children [
+                        Box {
+                          size 0.01 0.2 0.025
+                        }
+                      ]
+                    }
+                    physics USE PHYSICS_LEG
+                  }
+                }
+              ]
+              name "leg_up_1"
+              boundingObject DEF bobj_leg_up Pose {
+                translation 0.0225 0.0772743 -0.0207054
+                rotation 1 0 0 -0.261795307179586
+                children [
+                  Box {
+                    size 0.015 0.165 0.03
+                  }
+                ]
+              }
+              physics USE PHYSICS_LEG
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              anchor 0.01 0.06 0.21
+              minStop -1
+            }
+            device [
+              PositionSensor {
+              }
+              RotationalMotor {
+                name "joint_motor_2"
+                maxTorque 50
+              }
+            ]
+            endPoint Solid {
+              translation 0.009999739596426777 0.06000000152967373 0.21000000344303107
+              rotation 0.9999999999991807 3.329531917258022e-07 1.2361675253910128e-06 1.5708000000028193
+              children [
+                Shape {
+                  appearance BakelitePlastic {
+                  }
+                  geometry DEF leg_up_2 Mesh {
+                    url [
+                      "../meshes/leg_up_2.STL"
+                    ]
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 1 -7e-06 0
+                    anchor 0.005 0.14489 -0.038823
+                  }
+                  endPoint Solid {
+                    translation 0.005 0.14489 -0.038823
+                    rotation 9.999999437614526e-07 0.36421997953629986 -0.931312947674184 3.141599
+                    children [
+                      Shape {
+                        appearance BakelitePlastic {
+                        }
+                        geometry DEF leg_low_2 Mesh {
+                          url [
+                            "../meshes/leg_low_2.STL"
+                          ]
+                        }
+                      }
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          position 0.33329446402391827
+                          anchor -0.01 0.20489 0.080128
+                        }
+                        endPoint SolidReference {
+                          solidName "wheel"
+                        }
+                      }
+                    ]
+                    name "leg_low_2"
+                    boundingObject Pose {
+                      translation -0.005 0.102 0.0421
+                      rotation 1 0 0 0.38
+                      children [
+                        Box {
+                          size 0.01 0.2 0.025
+                        }
+                      ]
+                    }
+                    physics USE PHYSICS_LEG
+                  }
+                }
+              ]
+              name "leg_up_2"
+              boundingObject USE bobj_leg_up
+              physics USE PHYSICS_LEG
+            }
+          }
+        ]
+        name "balance"
+        boundingObject Pose {
+          translation 0.02 0.06 0.15
+          children [
+            Box {
+              size 0.04 0.12 0.3
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 20
+          centerOfMass [
+            0.01817 0.050196 0.15
+          ]
+          inertiaMatrix [
+            0.007974762 0.006909084 0.001360224
+            6.935368e-05 3.557001e-20 5.008754e-20
+          ]
+        }
+        controller "<extern>"
+      }
+    }
+  ]
+  controller "<none>"
+}
