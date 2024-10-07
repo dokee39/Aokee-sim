@@ -7,6 +7,7 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Cardboard.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/RoughPine.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/MarbleTiles.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/BakelitePlastic.proto"
 
 WorldInfo {
   basicTimeStep 1
@@ -18,8 +19,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.18044423989088682 0.369195007234568 -0.9116660150094812 0.9842127892134082
-  position -2.055980661988201 2.315096709204125 1.4623347257939203
+  orientation 0.13014940747822704 0.6250567096921921 -0.7696526758232164 0.7002852760694404
+  position -2.3560099539879986 1.4728672300369452 1.5127131428299379
 }
 TexturedBackground {
 }
@@ -36,13 +37,17 @@ Robot {
   translation 0 0 0.4
   children [
     Gyro {
+      rotation 0 0 1 1.5708003061004252
     }
     InertialUnit {
+      rotation 0 0 1 1.5708003061004252
       name "inertial"
     }
     HingeJoint {
       jointParameters HingeJointParameters {
         anchor -0.165 0 0
+        minStop -0.7
+        maxStop 0.7
       }
       device [
         PositionSensor {
@@ -110,6 +115,8 @@ Robot {
     HingeJoint {
       jointParameters HingeJointParameters {
         anchor 0.165 0 0
+        minStop -0.7
+        maxStop 0.7
       }
       device [
         RotationalMotor {
@@ -185,6 +192,19 @@ Robot {
       physics Physics {
         mass 10
       }
+    }
+    Solid {
+      translation 0 0.2 0
+      children [
+        Shape {
+          appearance BakelitePlastic {
+          }
+          geometry Sphere {
+            radius 0.01
+          }
+        }
+      ]
+      name "head"
     }
   ]
   physics DEF PH_BODY Physics {
