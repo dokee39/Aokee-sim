@@ -19,8 +19,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.13014940747822704 0.6250567096921921 -0.7696526758232164 0.7002852760694404
-  position -2.3560099539879986 1.4728672300369452 1.5127131428299379
+  orientation 0.07328217410695036 0.7326242101912668 -0.676676798478994 0.5212470393875374
+  position -2.5523683622882367 0.9308068960541016 1.378389489310476
 }
 TexturedBackground {
 }
@@ -36,12 +36,32 @@ Cat {
 Robot {
   translation 0 0 0.4
   children [
+    Solid {
+      translation 0 0.2 0.05
+      children [
+        Shape {
+          appearance BakelitePlastic {
+          }
+          geometry Sphere {
+            radius 0.01
+          }
+        }
+      ]
+      name "head"
+    }
     Gyro {
       rotation 0 0 1 1.5708003061004252
     }
     InertialUnit {
       rotation 0 0 1 1.5708003061004252
       name "inertial"
+    }
+    Shape {
+      appearance Cardboard {
+      }
+      geometry DEF BODY Box {
+        size 0.28 0.38 0.18
+      }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
@@ -62,8 +82,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.165 0 -0.15
-        rotation 1 0 0 4.6928012867022945e-06
+        translation -0.1649999991572505 4.7398320833502705e-07 -0.15000056273260184
+        rotation 0.9999987775857904 -0.001197182355614111 -0.0010057739965919144 4.692706653739929e-06
         children [
           HingeJoint {
             jointParameters HingeJointParameters {
@@ -81,7 +101,7 @@ Robot {
             ]
             endPoint Solid {
               translation -0.015 0 -0.15
-              rotation 0 1 0 1.5707996938995745
+              rotation 7.850449076788096e-17 1 0 1.5707996938995745
               children [
                 Shape {
                   appearance MarbleTiles {
@@ -95,6 +115,8 @@ Robot {
               name "wheel1"
               boundingObject USE WHEEL
               physics DEF PH_WHEEL Physics {
+                density -1
+                mass 1
               }
             }
           }
@@ -109,6 +131,8 @@ Robot {
         name "leg1"
         boundingObject USE LEG
         physics DEF PH_LEG Physics {
+          density -1
+          mass 0.5
         }
       }
     }
@@ -131,8 +155,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.165 0 -0.15
-        rotation 1 0 0 4.6928012867022945e-06
+        translation 0.16499999915455213 4.739832100836283e-07 -0.15000056273259946
+        rotation 0.999998764316462 0.0012010989754328758 0.0010142617020788521 4.6928012867022945e-06
         children [
           HingeJoint {
             jointParameters HingeJointParameters {
@@ -150,7 +174,7 @@ Robot {
             ]
             endPoint Solid {
               translation 0.015 0 -0.15
-              rotation 0 1 0 1.5707996938995745
+              rotation 1.9626122691970238e-17 1 0 1.5707996938995743
               children [
                 Shape {
                   appearance MarbleTiles {
@@ -160,8 +184,7 @@ Robot {
               ]
               name "wheel2"
               boundingObject USE WHEEL
-              physics DEF PH_WHEEL Physics {
-              }
+              physics USE PH_WHEEL
             }
           }
           Shape {
@@ -172,42 +195,14 @@ Robot {
         ]
         name "leg2"
         boundingObject USE LEG
-        physics DEF PH_LEG Physics {
-        }
+        physics USE PH_LEG
       }
-    }
-    Solid {
-      translation 0 0 -0.05
-      children [
-        Shape {
-          appearance Cardboard {
-          }
-          geometry DEF BODY Box {
-            size 0.28 0.38 0.18
-          }
-        }
-      ]
-      name "body"
-      boundingObject USE BODY
-      physics Physics {
-        mass 10
-      }
-    }
-    Solid {
-      translation 0 0.2 0
-      children [
-        Shape {
-          appearance BakelitePlastic {
-          }
-          geometry Sphere {
-            radius 0.01
-          }
-        }
-      ]
-      name "head"
     }
   ]
-  physics DEF PH_BODY Physics {
+  boundingObject USE BODY
+  physics Physics {
+    density -1
+    mass 10
   }
   controller "<extern>"
 }

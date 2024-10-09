@@ -95,3 +95,135 @@ results = simplify(subs(results, thetas_mul, zeros));
 results = solve(results, ddot_thetas);
 disp(results);
 
+pp_ddot_theta_w_1_theta_l_1 = diff(results.ddot_theta_w_1, theta_l_1);
+pp_ddot_theta_w_2_theta_l_1 = diff(results.ddot_theta_w_2, theta_l_1);
+pp_ddot_theta_w_1_theta_l_2 = diff(results.ddot_theta_w_1, theta_l_2);
+pp_ddot_theta_w_2_theta_l_2 = diff(results.ddot_theta_w_2, theta_l_2);
+pp_ddot_theta_w_1_theta_b = diff(results.ddot_theta_w_1, theta_b);
+pp_ddot_theta_w_2_theta_b = diff(results.ddot_theta_w_2, theta_b);
+pp_ddot_theta_w_1_tau_w_1 = diff(results.ddot_theta_w_1, tau_w_1);
+pp_ddot_theta_w_2_tau_w_1 = diff(results.ddot_theta_w_2, tau_w_1);
+pp_ddot_theta_w_1_tau_w_2 = diff(results.ddot_theta_w_1, tau_w_2);
+pp_ddot_theta_w_2_tau_w_2 = diff(results.ddot_theta_w_2, tau_w_2);
+pp_ddot_theta_w_1_tau_j_1 = diff(results.ddot_theta_w_1, tau_j_1);
+pp_ddot_theta_w_2_tau_j_1 = diff(results.ddot_theta_w_2, tau_j_1);
+pp_ddot_theta_w_1_tau_j_2 = diff(results.ddot_theta_w_1, tau_j_2);
+pp_ddot_theta_w_2_tau_j_2 = diff(results.ddot_theta_w_2, tau_j_2);
+
+a_2_5 = simplify(R_w ./ 2 .* (pp_ddot_theta_w_1_theta_l_1 + pp_ddot_theta_w_2_theta_l_1));
+a_2_7 = simplify(R_w ./ 2 .* (pp_ddot_theta_w_1_theta_l_2 + pp_ddot_theta_w_2_theta_l_2));
+a_2_9 = simplify(R_w ./ 2 .* (pp_ddot_theta_w_1_theta_b + pp_ddot_theta_w_2_theta_b));
+b_2_1 = simplify(R_w ./ 2 .* (pp_ddot_theta_w_1_tau_w_1 + pp_ddot_theta_w_2_tau_w_1));
+b_2_2 = simplify(R_w ./ 2 .* (pp_ddot_theta_w_1_tau_w_2 + pp_ddot_theta_w_2_tau_w_2));
+b_2_3 = simplify(R_w ./ 2 .* (pp_ddot_theta_w_1_tau_j_1 + pp_ddot_theta_w_2_tau_j_1));
+b_2_4 = simplify(R_w ./ 2 .* (pp_ddot_theta_w_1_tau_j_2 + pp_ddot_theta_w_2_tau_j_2));
+
+
+a_4_5 = simplify(R_w ./ 2 ./ R_l .* (-pp_ddot_theta_w_1_theta_l_1 + pp_ddot_theta_w_2_theta_l_1) - l_1 ./ 2 ./ R_l .* diff(results.ddot_theta_l_1, theta_l_1) + l_2 ./ 2 ./ R_l .* diff(results.ddot_theta_l_2, theta_l_1));
+a_4_7 = simplify(R_w ./ 2 ./ R_l .* (-pp_ddot_theta_w_1_theta_l_2 + pp_ddot_theta_w_2_theta_l_2) - l_1 ./ 2 ./ R_l .* diff(results.ddot_theta_l_1, theta_l_2) + l_2 ./ 2 ./ R_l .* diff(results.ddot_theta_l_2, theta_l_2));
+a_4_9 = simplify(R_w ./ 2 ./ R_l .* (-pp_ddot_theta_w_1_theta_b + pp_ddot_theta_w_2_theta_b) - l_1 ./ 2 ./ R_l .* diff(results.ddot_theta_l_1, theta_b) + l_2 ./ 2 ./ R_l .* diff(results.ddot_theta_l_2, theta_b));
+b_4_1 = simplify(R_w ./ 2 ./ R_l .* (-pp_ddot_theta_w_1_tau_w_1 + pp_ddot_theta_w_2_tau_w_1) - l_1 ./ 2 ./ R_l .* diff(results.ddot_theta_l_1, tau_w_1) + l_2 ./ 2 ./ R_l .* diff(results.ddot_theta_l_2, tau_w_1));
+b_4_2 = simplify(R_w ./ 2 ./ R_l .* (-pp_ddot_theta_w_1_tau_w_2 + pp_ddot_theta_w_2_tau_w_2) - l_1 ./ 2 ./ R_l .* diff(results.ddot_theta_l_1, tau_w_2) + l_2 ./ 2 ./ R_l .* diff(results.ddot_theta_l_2, tau_w_2));
+b_4_3 = simplify(R_w ./ 2 ./ R_l .* (-pp_ddot_theta_w_1_tau_j_1 + pp_ddot_theta_w_2_tau_j_1) - l_1 ./ 2 ./ R_l .* diff(results.ddot_theta_l_1, tau_j_1) + l_2 ./ 2 ./ R_l .* diff(results.ddot_theta_l_2, tau_j_1));
+b_4_4 = simplify(R_w ./ 2 ./ R_l .* (-pp_ddot_theta_w_1_tau_j_2 + pp_ddot_theta_w_2_tau_j_2) - l_1 ./ 2 ./ R_l .* diff(results.ddot_theta_l_1, tau_j_2) + l_2 ./ 2 ./ R_l .* diff(results.ddot_theta_l_2, tau_j_2));
+
+a_6_5 = simplify(diff(results.ddot_theta_l_1, theta_l_1));
+a_6_7 = simplify(diff(results.ddot_theta_l_1, theta_l_2));
+a_6_9 = simplify(diff(results.ddot_theta_l_1, theta_b));
+b_6_1 = simplify(diff(results.ddot_theta_l_1, tau_w_1));
+b_6_2 = simplify(diff(results.ddot_theta_l_1, tau_w_2));
+b_6_3 = simplify(diff(results.ddot_theta_l_1, tau_j_1));
+b_6_4 = simplify(diff(results.ddot_theta_l_1, tau_j_2));
+
+a_8_5 = simplify(diff(results.ddot_theta_l_2, theta_l_1));
+a_8_7 = simplify(diff(results.ddot_theta_l_2, theta_l_2));
+a_8_9 = simplify(diff(results.ddot_theta_l_2, theta_b));
+b_8_1 = simplify(diff(results.ddot_theta_l_2, tau_w_1));
+b_8_2 = simplify(diff(results.ddot_theta_l_2, tau_w_2));
+b_8_3 = simplify(diff(results.ddot_theta_l_2, tau_j_1));
+b_8_4 = simplify(diff(results.ddot_theta_l_2, tau_j_2));
+
+a_10_5 = simplify(diff(results.ddot_theta_b, theta_l_1));
+a_10_7 = simplify(diff(results.ddot_theta_b, theta_l_2));
+a_10_9 = simplify(diff(results.ddot_theta_b, theta_b));
+b_10_1 = simplify(diff(results.ddot_theta_b, tau_w_1));
+b_10_2 = simplify(diff(results.ddot_theta_b, tau_w_2));
+b_10_3 = simplify(diff(results.ddot_theta_b, tau_j_1));
+b_10_4 = simplify(diff(results.ddot_theta_b, tau_j_2));
+
+param = [R_w R_l l_1 l_2 l_w_1 l_w_2 l_b_1 l_b_2 l_c g m_w m_l m_b I_w I_l_1 I_l_2 I_b I_z];
+param_num = [0.075 0.1875 0.3 0.3 0.15 0.15 0.10 0.10 0.05 9.8 1 0.5 10 0.003 0.004 0.004 0.2 0.2];
+
+a_2_5_num = subs(a_2_5, param, param_num);
+a_2_7_num = subs(a_2_7, param, param_num);
+a_2_9_num = subs(a_2_9, param, param_num);
+b_2_1_num = subs(b_2_1, param, param_num);
+b_2_2_num = subs(b_2_2, param, param_num);
+b_2_3_num = subs(b_2_3, param, param_num);
+b_2_4_num = subs(b_2_4, param, param_num);
+
+a_4_5_num = subs(a_4_5, param, param_num);
+a_4_7_num = subs(a_4_7, param, param_num);
+a_4_9_num = subs(a_4_9, param, param_num);
+b_4_1_num = subs(b_4_1, param, param_num);
+b_4_2_num = subs(b_4_2, param, param_num);
+b_4_3_num = subs(b_4_3, param, param_num);
+b_4_4_num = subs(b_4_4, param, param_num);
+
+a_6_5_num = subs(a_6_5, param, param_num);
+a_6_7_num = subs(a_6_7, param, param_num);
+a_6_9_num = subs(a_6_9, param, param_num);
+b_6_1_num = subs(b_6_1, param, param_num);
+b_6_2_num = subs(b_6_2, param, param_num);
+b_6_3_num = subs(b_6_3, param, param_num);
+b_6_4_num = subs(b_6_4, param, param_num);
+
+a_8_5_num = subs(a_8_5, param, param_num);
+a_8_7_num = subs(a_8_7, param, param_num);
+a_8_9_num = subs(a_8_9, param, param_num);
+b_8_1_num = subs(b_8_1, param, param_num);
+b_8_2_num = subs(b_8_2, param, param_num);
+b_8_3_num = subs(b_8_3, param, param_num);
+b_8_4_num = subs(b_8_4, param, param_num);
+
+a_10_5_num = subs(a_10_5, param, param_num);
+a_10_7_num = subs(a_10_7, param, param_num);
+a_10_9_num = subs(a_10_9, param, param_num);
+b_10_1_num = subs(b_10_1, param, param_num);
+b_10_2_num = subs(b_10_2, param, param_num);
+b_10_3_num = subs(b_10_3, param, param_num);
+b_10_4_num = subs(b_10_4, param, param_num);
+
+x_u = [theta_w_1(t) theta_w_2(t) theta_l_1(t) theta_l_2(t) theta_b(t) tau_w_1(t) tau_w_2(t) tau_j_1(t) tau_j_2(t)];
+zeros = [0 0 0 0 0 0 0 0 0];
+
+A  = ...
+[0,1,0,0,0,0,0,0,0,0; ...
+ 0,0,0,0,a_2_5_num,0,a_2_7_num,0,a_10_9_num,0; ...
+ 0,1,0,0,0,0,0,0,0,0; ...
+ 0,0,0,0,a_4_5_num,0,a_4_7_num,0,a_10_9_num,0; ...
+ 0,1,0,0,0,0,0,0,0,0; ...
+ 0,0,0,0,a_6_5_num,0,a_6_7_num,0,a_10_9_num,0; ...
+ 0,1,0,0,0,0,0,0,0,0; ...
+ 0,0,0,0,a_8_5_num,0,a_8_7_num,0,a_10_9_num,0; ...
+ 0,1,0,0,0,0,0,0,0,0; ...
+ 0,0,0,0,a_10_5_num,0,a_10_7_num,0,a_10_9_num,0];
+
+B = ...
+[0,0,0,0; ...
+ b_2_1_num,b_2_2_num,b_2_3_num,b_2_4_num; ...
+ 0,0,0,0; ...
+ b_4_1_num,b_4_2_num,b_4_3_num,b_4_4_num; ...
+ 0,0,0,0; ...
+ b_6_1_num,b_6_2_num,b_6_3_num,b_6_4_num; ...
+ 0,0,0,0; ...
+ b_8_1_num,b_8_2_num,b_8_3_num,b_8_4_num; ...
+ 0,0,0,0; ...
+ b_10_1_num,b_10_2_num,b_10_3_num,b_10_4_num];
+
+A = subs(A, x_u, zeros);
+B = subs(B, x_u, zeros);
+
+vpa(A, 6)
+vpa(B, 6)
+
