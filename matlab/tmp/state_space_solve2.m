@@ -39,11 +39,6 @@ ddot_phi = simplify(subs(subs(diff(phi, t, t), diffs, dots), square_of_dots, zer
 syms tau_w_1(t) tau_w_2(t) tau_j_1(t) tau_j_2(t)
 syms F_ws_1 F_ws_2 F_wh_1 F_wh_2 F_ns_1 F_ns_2 F_nh_1 F_nh_2 f_1 f_2
 
-vars = [ddot_theta_w_1 ddot_theta_w_2 ddot_theta_l_1 ddot_theta_l_2 ddot_theta_b ...
-        tau_w_1 tau_w_2 tau_j_1 tau_j_2];
-binding_force = [F_ws_1 F_ws_2 F_wh_1 F_wh_2 F_ns_1 F_ns_2 F_nh_1 F_nh_2 f_1 f_2];
-ddot_thetas = [ddot_theta_w_1 ddot_theta_w_2 ddot_theta_l_1 ddot_theta_l_2 ddot_theta_b];
-
 eqn1 = m_w * R_w * ddot_theta_w_1 == f_1 - F_ws_1;
 eqn2 = m_w * R_w * ddot_theta_w_2 == f_2 - F_ws_2;
 
@@ -71,34 +66,37 @@ eqn15 = F_wh_1 == F_wh_2;
 
 eqns = {eqn1 eqn2 eqn3 eqn4 eqn5 eqn6 eqn7 eqn8 eqn9 eqn10 eqn11 eqn12 eqn13 eqn14 eqn15};
 
-thetas = [sin(theta_l_1) sin(theta_l_2) sin(theta_b) ...
-          cos(theta_l_1) cos(theta_l_2) cos(theta_b)];
-thetas_alt = [theta_l_1(t) theta_l_2(t) theta_b(t) 1 1 1];
-thetas_mul = [theta_l_1^2 theta_l_2^2 theta_l_1*theta_l_2 ...
-              theta_w_1^2 theta_l_2^2 theta_w_1*theta_w_2];
-zeros = [0 0 0 0 0 0];
-
-eqns = cellfun(@(expr) subs(expr, thetas, thetas_alt), eqns, 'UniformOutput', false);
-eqns_binding_force = eqns([1:8, 12, 15]);
-eqns_independent = eqns([9, 10, 11, 13, 14]);
-
-sol = solve([eqns_binding_force{:}], binding_force);
-disp(sol);
-sols = simplify(collect([sol.F_ws_1 sol.F_ws_2 sol.F_wh_1 sol.F_wh_2 sol.F_ns_1 sol.F_ns_2 sol.F_nh_1 sol.F_nh_2 sol.f_1 sol.f_2], vars));
-
-results = simplify(collect(subs([eqns_independent{:}], binding_force, sols), vars));
-results = simplify(subs(results, thetas_mul, zeros));
-
-results = solve(results, ddot_thetas);
-disp(results);
-
-function results = column_solve(results, n)
+function results = column_solve(eqns, n)
     syms theta_w_1(t) theta_w_2(t) theta_l_1(t) theta_l_2(t) theta_b(t)
+    syms ddot_theta_w_1 ddot_theta_w_2 ddot_theta_l_1 ddot_theta_l_2 ddot_theta_b
     syms tau_w_1(t) tau_w_2(t) tau_j_1(t) tau_j_2(t)
+    syms F_ws_1 F_ws_2 F_wh_1 F_wh_2 F_ns_1 F_ns_2 F_nh_1 F_nh_2 f_1 f_2
     syms R_w R_l l_1 l_2
 
+    binding_force = [F_ws_1 F_ws_2 F_wh_1 F_wh_2 F_ns_1 F_ns_2 F_nh_1 F_nh_2 f_1 f_2];
+    ddot_thetas = [ddot_theta_w_1 ddot_theta_w_2 ddot_theta_l_1 ddot_theta_l_2 ddot_theta_b];
+
     x_u = [theta_w_1(t) theta_w_2(t) theta_l_1(t) theta_l_2(t) theta_b(t) tau_w_1(t) tau_w_2(t) tau_j_1(t) tau_j_2(t)];
-    zeros = [0 0 0 0 0 0 0 0 0];
+    zeros = x_u;
+    zeros([1:n-1, n+1:end]) = 0;
+
+    eqns = cellfun(@(expr) subs(expr, x_u, zeros), eqns, 'UniformOutput', false);
+
+    eqns_binding_force = eqns([1:8, 12, 15]);
+    eqns_independent = eqns([9, 10, 11, 13, 14]);
+    sol = solve([eqns_binding_force{:}], binding_force);
+    % disp(sol);
+    sols = simplify(collect([sol.F_ws_1 sol.F_ws_2 sol.F_wh_1 sol.F_wh_2 sol.F_ns_1 sol.F_ns_2 sol.F_nh_1 sol.F_nh_2 sol.f_1 sol.f_2], ddot_thetas));
+    results = simplify(subs([eqns_independent{:}], binding_force, sols));
+    results = solve(results, ddot_thetas);
+    % disp(results);
+
+    if (n == 3) || (n == 4) 
+        thetas = [sin(x_u(n)) cos(x_u(n))];
+        thetas_alt = [x_u(n) 1];
+        results = subs(results, thetas, thetas_alt);
+        results = subs(results, x_u(n)^2, 0);
+    end
 
     pp_ddot_theta_w_1 = simplify(diff(results.ddot_theta_w_1, x_u(n)));
     pp_ddot_theta_w_2 = simplify(diff(results.ddot_theta_w_2, x_u(n)));
@@ -110,7 +108,6 @@ function results = column_solve(results, n)
     row_4 = simplify(R_w ./ 2 ./ R_l .* (-pp_ddot_theta_w_1 + pp_ddot_theta_w_2) - l_1 ./ 2 ./ R_l .* pp_ddot_theta_l_1 + l_2 ./ 2 ./ R_l .* pp_ddot_theta_l_2);
 
     results = [0 row_2 0 row_4 0 pp_ddot_theta_l_1 0 pp_ddot_theta_l_2 0 pp_ddot_theta_b];
-    results = subs(results, x_u, zeros);
 end
 
 A = [ ...
@@ -118,19 +115,19 @@ A = [ ...
 1, 0, 0, 0, 0, 0, 0, 0, 0, 0; ...
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0; ...
 0, 0, 1, 0, 0, 0, 0, 0, 0, 0; ...
-column_solve(results, 3); ...
+column_solve(eqns, 3); ...
 0, 0, 0, 0, 1, 0, 0, 0, 0, 0; ...
-column_solve(results, 4); ...
+column_solve(eqns, 4); ...
 0, 0, 0, 0, 0, 0, 1, 0, 0, 0; ...
-column_solve(results, 5); ...
+column_solve(eqns, 5); ...
 0, 0, 0, 0, 0, 0, 0, 0, 1, 0; ...
 ]';
 
 B = [ ...
-column_solve(results, 6); ...
-column_solve(results, 7); ...
-column_solve(results, 8); ...
-column_solve(results, 9); ...
+column_solve(eqns, 6); ...
+column_solve(eqns, 7); ...
+column_solve(eqns, 8); ...
+column_solve(eqns, 9); ...
 ]';
 
 param = [R_w R_l l_1 l_2 l_w_1 l_w_2 l_b_1 l_b_2 l_c g m_w m_l m_b I_w I_l_1 I_l_2 I_b I_z];
