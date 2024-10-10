@@ -9,31 +9,31 @@ diffs = [diff(theta_w_1, t, t) diff(theta_w_2, t, t) diff(theta_l_1, t, t) diff(
 dots = [ddot_theta_w_1 ddot_theta_w_2 ddot_theta_l_1 ddot_theta_l_2 ddot_theta_b ...
         dot_theta_w_1 dot_theta_w_2 dot_theta_l_1 dot_theta_l_2 dot_theta_b];
 square_of_dots = [dot_theta_w_1^2 dot_theta_w_2^2 dot_theta_l_1^2 dot_theta_l_2^2 dot_theta_b^2];
-zeros = [0 0 0 0 0];
+zeros_ = [0 0 0 0 0];
 
 s_w = R_w / 2 *(theta_w_1 + theta_w_2);
-ddot_s_w = simplify(subs(subs(diff(s_w, t, t), diffs, dots), square_of_dots, zeros));
+ddot_s_w = simplify(subs(subs(diff(s_w, t, t), diffs, dots), square_of_dots, zeros_));
 
 h_b = l_1 / 2 * cos(theta_l_1) + l_2 / 2 * cos(theta_l_2);
-ddot_h_b = simplify(subs(subs(diff(h_b, t, t), diffs, dots), square_of_dots, zeros));
+ddot_h_b = simplify(subs(subs(diff(h_b, t, t), diffs, dots), square_of_dots, zeros_));
 
 s_b = R_w / 2 * (theta_w_1 + theta_w_2) + l_1 / 2 * sin(theta_l_1) + l_2 / 2 * sin(theta_l_2);
-ddot_s_b = simplify(subs(subs(diff(s_b, t, t), diffs, dots), square_of_dots, zeros));
+ddot_s_b = simplify(subs(subs(diff(s_b, t, t), diffs, dots), square_of_dots, zeros_));
 
 s_l_1 = R_w * theta_w_1 + l_w_1 * sin(theta_l_1);
-ddot_s_l_1 = simplify(subs(subs(diff(s_l_1, t, t), diffs, dots), square_of_dots, zeros));
+ddot_s_l_1 = simplify(subs(subs(diff(s_l_1, t, t), diffs, dots), square_of_dots, zeros_));
 
 s_l_2 = R_w * theta_w_2 + l_w_2 * sin(theta_l_2);
-ddot_s_l_2 = simplify(subs(subs(diff(s_l_2, t, t), diffs, dots), square_of_dots, zeros));
+ddot_s_l_2 = simplify(subs(subs(diff(s_l_2, t, t), diffs, dots), square_of_dots, zeros_));
 
 h_l_1 = h_b - l_b_1 * cos(theta_l_1);
-ddot_h_l_1 = simplify(subs(subs(diff(h_l_1, t, t), diffs, dots), square_of_dots, zeros));
+ddot_h_l_1 = simplify(subs(subs(diff(h_l_1, t, t), diffs, dots), square_of_dots, zeros_));
 
 h_l_2 = h_b - l_b_2 * cos(theta_l_2);
-ddot_h_l_2 = simplify(subs(subs(diff(h_l_2, t, t), diffs, dots), square_of_dots, zeros));
+ddot_h_l_2 = simplify(subs(subs(diff(h_l_2, t, t), diffs, dots), square_of_dots, zeros_));
 
 phi = R_w / (2 * R_l) * (- theta_w_1 + theta_w_2) - l_1 / (2 * R_l) * sin(theta_l_1) + l_2 / (2 * R_l) * sin(theta_l_2);
-ddot_phi = simplify(subs(subs(diff(phi, t, t), diffs, dots), square_of_dots, zeros));
+ddot_phi = simplify(subs(subs(diff(phi, t, t), diffs, dots), square_of_dots, zeros_));
 
 
 syms tau_w_1(t) tau_w_2(t) tau_j_1(t) tau_j_2(t)
@@ -71,26 +71,25 @@ eqn15 = F_wh_1 == F_wh_2;
 
 eqns = {eqn1 eqn2 eqn3 eqn4 eqn5 eqn6 eqn7 eqn8 eqn9 eqn10 eqn11 eqn12 eqn13 eqn14 eqn15};
 
-thetas = [sin(theta_l_1) sin(theta_l_2) sin(theta_b) ...
-          cos(theta_l_1) cos(theta_l_2) cos(theta_b)];
-thetas_alt = [theta_l_1(t) theta_l_2(t) theta_b(t) 1 1 1];
+thetas = [sin(theta_l_1) sin(theta_l_2) cos(theta_l_1) cos(theta_l_2)];
+thetas_alt = [theta_l_1(t) theta_l_2(t) 1 1];
 thetas_mul = [theta_l_1^2 theta_l_2^2 theta_l_1*theta_l_2 ...
               theta_w_1^2 theta_l_2^2 theta_w_1*theta_w_2];
-zeros = [0 0 0 0 0 0];
+zeros_ = [0 0 0 0 0 0];
 
 eqns = cellfun(@(expr) subs(expr, thetas, thetas_alt), eqns, 'UniformOutput', false);
 eqns_binding_force = eqns([1:8, 12, 15]);
 eqns_independent = eqns([9, 10, 11, 13, 14]);
 
 sol = solve([eqns_binding_force{:}], binding_force);
-disp(sol);
+% disp(sol);
 sols = simplify(collect([sol.F_ws_1 sol.F_ws_2 sol.F_wh_1 sol.F_wh_2 sol.F_ns_1 sol.F_ns_2 sol.F_nh_1 sol.F_nh_2 sol.f_1 sol.f_2], vars));
 
 results = simplify(collect(subs([eqns_independent{:}], binding_force, sols), vars));
-results = simplify(subs(results, thetas_mul, zeros));
+results = simplify(subs(results, thetas_mul, zeros_));
 
 results = solve(results, ddot_thetas);
-disp(results);
+% disp(results);
 
 function results = column_solve(results, n)
     syms theta_w_1(t) theta_w_2(t) theta_l_1(t) theta_l_2(t) theta_b(t)
@@ -98,7 +97,7 @@ function results = column_solve(results, n)
     syms R_w R_l l_1 l_2
 
     x_u = [theta_w_1(t) theta_w_2(t) theta_l_1(t) theta_l_2(t) theta_b(t) tau_w_1(t) tau_w_2(t) tau_j_1(t) tau_j_2(t)];
-    zeros = [0 0 0 0 0 0 0 0 0];
+    zeros_ = [0 0 0 0 0 0 0 0 0];
 
     pp_ddot_theta_w_1 = simplify(diff(results.ddot_theta_w_1, x_u(n)));
     pp_ddot_theta_w_2 = simplify(diff(results.ddot_theta_w_2, x_u(n)));
@@ -110,10 +109,10 @@ function results = column_solve(results, n)
     row_4 = simplify(R_w ./ 2 ./ R_l .* (-pp_ddot_theta_w_1 + pp_ddot_theta_w_2) - l_1 ./ 2 ./ R_l .* pp_ddot_theta_l_1 + l_2 ./ 2 ./ R_l .* pp_ddot_theta_l_2);
 
     results = [0 row_2 0 row_4 0 pp_ddot_theta_l_1 0 pp_ddot_theta_l_2 0 pp_ddot_theta_b];
-    results = subs(results, x_u, zeros);
+    results = subs(results, x_u, zeros_);
 end
 
-A = [ ...
+A_sym = [ ...
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0; ...
 1, 0, 0, 0, 0, 0, 0, 0, 0, 0; ...
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0; ...
@@ -126,19 +125,10 @@ column_solve(results, 5); ...
 0, 0, 0, 0, 0, 0, 0, 0, 1, 0; ...
 ]';
 
-B = [ ...
+B_sym = [ ...
 column_solve(results, 6); ...
 column_solve(results, 7); ...
 column_solve(results, 8); ...
 column_solve(results, 9); ...
 ]';
-
-param = [R_w R_l l_1 l_2 l_w_1 l_w_2 l_b_1 l_b_2 l_c g m_w m_l m_b I_w I_l_1 I_l_2 I_b I_z];
-param_num = [0.075 0.1875 0.3 0.3 0.15 0.15 0.10 0.10 0.05 9.8 1 0.5 10 0.003 0.004 0.004 0.2 0.2];
-
-A_num = subs(A, param, param_num);
-B_num = subs(B, param, param_num);
-
-vpa(A_num, 6)
-vpa(B_num, 6)
 
